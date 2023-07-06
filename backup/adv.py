@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import os
+import config
 
 userAgent = ("Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36")
 options = webdriver.ChromeOptions()
@@ -19,7 +19,7 @@ options.add_argument('--no-sandbox')
 options.add_argument('--headless=new')
 driver = webdriver.Chrome(options=options)
 
-with open("amazon_bags.csv", mode='r', encoding='ISO-8859-1') as csv_file:
+with open(config.outputFile+'.csv', mode='r', encoding='ISO-8859-1') as csv_file:
     csv_reader = csv.DictReader(csv_file)
     urls = [row['URL'] for row in csv_reader]
     data = []
@@ -61,7 +61,7 @@ with open("amazon_bags.csv", mode='r', encoding='ISO-8859-1') as csv_file:
         print("\nPRODUCT DESCRIPTION : ",product_description)
         print("\nMANUFACTURER : ",manufacturer)
         
-        csv_second = open('amazon_bags_scraped.csv', mode='w', encoding='utf-8', newline='')
+        csv_second = open(config.outputFile+'_adv_scraped.csv', mode='w', encoding='utf-8', newline='')
         fieldnames = ['Description', 'ASIN', 'Product Description', 'Manufacturer']
         writer = csv.DictWriter(csv_second, fieldnames=scraped_data.keys())
                     
